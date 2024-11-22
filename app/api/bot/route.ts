@@ -358,15 +358,6 @@ bot.on('message:text', async (ctx) => {
 
     await ctx.reply(ctx.message.text)
 
-    
-
-    // close the context
-
-    ctx.api.close()
-
-
-
-
 })
 
 bot.on('message:photo', async (ctx) => {
