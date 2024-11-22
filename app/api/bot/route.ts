@@ -306,7 +306,7 @@ bot.on('message:text', async (ctx) => {
                 caption: 'This is a AI Agent photo!'
             })
 
-
+            await ctx.reply('AI 에이전트 이미지 생성 완료');
 
 
         } catch (error) {
@@ -318,11 +318,6 @@ bot.on('message:text', async (ctx) => {
 
             await ctx.reply('AI 에이전트 이미지 생성 실패');
         }
-       
-        
-        
-        
-    
 
         return
 
@@ -336,7 +331,7 @@ bot.on('message:text', async (ctx) => {
         // image
         // url: https://vzrcy5vcsuuocnf3.public.blob.vercel-storage.com/RiMb8wi-jNIcD6NZIkNZDiCTEwU5C5SIZHFpAu.png
 
-        const photo = 'https://twosomeplace-bot.vercel.app/blue-frog.png'
+        const photo = 'https://vzrcy5vcsuuocnf3.public.blob.vercel-storage.com/RiMb8wi-jNIcD6NZIkNZDiCTEwU5C5SIZHFpAu.png'
         await ctx.replyWithPhoto(photo, {
             caption: '윤명환은 청개구리다!'
         })
