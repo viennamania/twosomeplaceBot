@@ -7,6 +7,17 @@ import { Bot, webhookCallback } from 'grammy'
 import Replicate from "replicate";
 import * as fal from "@fal-ai/serverless-client";
 
+import { openai } from "@ai-sdk/openai";
+
+import {
+  convertToCoreMessages,
+  streamText
+} from "ai";
+
+
+
+
+
 
 
 // nextjs-app
@@ -46,8 +57,9 @@ bot.on('message:text', async (ctx) => {
         })
 
         return
-    }
-    else if (ctx.message.text === '/tbot') {
+
+
+    }  else if (ctx.message.text === '/tbot') {
 
 
         //await ctx.reply('Hello!')
@@ -310,8 +322,22 @@ bot.on('message:text', async (ctx) => {
         
         
         
-        
- 
+    
+
+        return
+
+    } else if (ctx.message.text === '/청개구리') {
+
+
+        //await ctx.reply('Hello!')
+
+        // image
+        // url: https://vzrcy5vcsuuocnf3.public.blob.vercel-storage.com/RiMb8wi-jNIcD6NZIkNZDiCTEwU5C5SIZHFpAu.png
+
+        const photo = 'https://twosomeplace-bot.vercel.app/blue-frog.png'
+        await ctx.replyWithPhoto(photo, {
+            caption: '윤명환은 청개구리다!'
+        })
 
         return
     }
@@ -319,7 +345,104 @@ bot.on('message:text', async (ctx) => {
 
 
 
+    ///const messages = ctx.message.text;
+
+    const messages = convertToCoreMessages([{
+        role: 'user',
+        content: ctx.message.text
+    }]);
+
+
+    const result = streamText({
+    
+        model: openai("gpt-4o"),
+    
+        system:
+          "do not respond on markdown or lists, keep your responses brief, you can ask the user to upload images or documents if it could help you understand the problem better",
+        
+        messages:
+            ///convertToCoreMessages(messages),
+            messages,
+        
+    
+        /////messages: convertToCoreMessages(updatedMessages),
+      });
+
+    console.log('result', result);
+    /*
+    DefaultStreamTextResult {
+        warningsPromise: DelayedPromise {
+            status: { type: 'pending' },
+            _resolve: undefined,
+            _reject: undefined
+        },
+        usagePromise: DelayedPromise {
+            status: { type: 'pending' },
+            _resolve: undefined,
+            _reject: undefined
+        },
+        finishReasonPromise: DelayedPromise {
+            status: { type: 'pending' },
+            _resolve: undefined,
+            _reject: undefined
+        },
+        providerMetadataPromise: DelayedPromise {
+            status: { type: 'pending' },
+            _resolve: undefined,
+            _reject: undefined
+        },
+        textPromise: DelayedPromise {
+            status: { type: 'pending' },
+            _resolve: undefined,
+            _reject: undefined
+        },
+        toolCallsPromise: DelayedPromise {
+            status: { type: 'pending' },
+            _resolve: undefined,
+            _reject: undefined
+        },
+        toolResultsPromise: DelayedPromise {
+            status: { type: 'pending' },
+            _resolve: undefined,
+            _reject: undefined
+        },
+        requestPromise: DelayedPromise {
+            status: { type: 'pending' },
+            _resolve: undefined,
+            _reject: undefined
+        },
+        responsePromise: DelayedPromise {
+            status: { type: 'pending' },
+            _resolve: undefined,
+            _reject: undefined
+        },
+        stepsPromise: DelayedPromise {
+            status: { type: 'pending' },
+            _resolve: undefined,
+            _reject: undefined
+        },
+        stitchableStream: {
+            stream: ReadableStream { locked: false, state: 'readable', supportsBYOB: false },
+            addStream: [Function: addStream],
+            close: [Function: close]
+        }
+        }
+    */
+
+
+    //const text = await result.text;
+
+    //console.log('text', text);
+    // await ctx.reply(text)
+
+
     await ctx.reply(ctx.message.text)
+
+    
+
+
+
+
 })
 
 bot.on('message:photo', async (ctx) => {
