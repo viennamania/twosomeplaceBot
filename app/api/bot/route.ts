@@ -350,6 +350,10 @@ bot.on('message:text', async (ctx) => {
 
     
 
+    // close the context
+
+    ctx.api.close()
+
 
 
 
@@ -417,6 +421,7 @@ bot.on('message:photo', async (ctx) => {
 
  
     
+    ctx.api.close()
 
 
 
