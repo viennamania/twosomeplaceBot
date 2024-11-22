@@ -327,8 +327,8 @@ bot.on('message:text', async (ctx) => {
         return
 
     }
-    /*
-    else if (ctx.message.text === '/청개구리') {
+    
+    else if (ctx.message.text === '/frog') {
 
 
         //await ctx.reply('Hello!')
@@ -343,10 +343,10 @@ bot.on('message:text', async (ctx) => {
 
         return
     }
-    */
+    
     else if (ctx.message.text === '/help') {
 
-        await ctx.reply('Available commands: /start, /tbot')
+        await ctx.reply('Available commands: /start, /tbot, /frog, /help')
 
         return
 
