@@ -26,6 +26,7 @@ const token = process.env.TELEGRAM_BOT_TOKEN
 if (!token) throw new Error('TELEGRAM_BOT_TOKEN environment variable not found.')
 
 const bot = new Bot(token)
+
 bot.on('message:text', async (ctx) => {
 
 
@@ -199,18 +200,6 @@ bot.on('message:text', async (ctx) => {
             } );
 
             const imageUrl = result[0].url;
-
-
-
-
-
-
-
-
-
-
- 
-
         
             if (!imageUrl) {
 
@@ -332,5 +321,72 @@ bot.on('message:text', async (ctx) => {
 
     await ctx.reply(ctx.message.text)
 })
+
+bot.on('message:photo', async (ctx) => {
+
+    console.log("message:photo", ctx.message.photo)
+    /*
+    [
+        {
+            file_id: 'AgACAgUAAxkBAAM9Z0BrBLFJ_Wig5A93aThUeVfbE_0AAmXDMRsJTwABVuHbvjIY3o0FAQADAgADcwADNgQ',
+            file_unique_id: 'AQADZcMxGwlPAAFWeA',
+            file_size: 1171,
+            width: 42,
+            height: 90
+        },
+        {
+            file_id: 'AgACAgUAAxkBAAM9Z0BrBLFJ_Wig5A93aThUeVfbE_0AAmXDMRsJTwABVuHbvjIY3o0FAQADAgADbQADNgQ',
+            file_unique_id: 'AQADZcMxGwlPAAFWcg',
+            file_size: 13532,
+            width: 148,
+            height: 320
+        },
+        {
+            file_id: 'AgACAgUAAxkBAAM9Z0BrBLFJ_Wig5A93aThUeVfbE_0AAmXDMRsJTwABVuHbvjIY3o0FAQADAgADeAADNgQ',
+            file_unique_id: 'AQADZcMxGwlPAAFWfQ',
+            file_size: 55582,
+            width: 369,
+            height: 800
+        },
+        {
+            file_id: 'AgACAgUAAxkBAAM9Z0BrBLFJ_Wig5A93aThUeVfbE_0AAmXDMRsJTwABVuHbvjIY3o0FAQADAgADeQADNgQ',
+            file_unique_id: 'AQADZcMxGwlPAAFWfg',
+            file_size: 99661,
+            width: 591,
+            height: 1280
+        }
+    ]
+    */
+    // get the last photo
+
+    const photo = ctx.message.photo[ctx.message.photo.length - 1].file_id
+
+    // get image from photo
+
+    const photoInfo = await ctx.api.getFile(photo)
+
+    console.log("photoInfo", photoInfo)
+    /*
+    {
+        file_id: 'AgACAgUAAxkBAAM7Z0Bq4By_0DSwiBr18_SXceWmVIsAAmTDMRsJTwABVgaKqMNcfad3AQADAgADeQADNgQ',
+        file_unique_id: 'AQADZMMxGwlPAAFWfg',
+        file_size: 156830,
+        file_path: 'photos/file_0.jpg'
+        }
+    */
+   // get the image url
+    const photoUrl = `https://api.telegram.org/file/bot${token}/${photoInfo.file_path}`
+
+    console.log("photoUrl", photoUrl)
+
+  
+    await ctx.reply('This is a photo!')
+
+ 
+    
+
+
+
+} )
 
 export const POST = webhookCallback(bot, 'std/http')
