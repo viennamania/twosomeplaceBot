@@ -668,9 +668,6 @@ bot.on('message:photo', async (ctx) => {
 
 
 // message is video
-bot.on('message:video', async (ctx) => {
-
-    console.log("message:video", ctx.message.video)
     /*
     {
         file_id: 'BAACAgUAAxkBAAM9Z0Bq4By_0DSwiBr18_SXceWmVIsAAmTDMRsJTwABVgaKqMNcfad3AQADAgADeQADNgQ',
@@ -679,6 +676,11 @@ bot.on('message:video', async (ctx) => {
         file_path: 'videos/file_0.mp4'
         }
     */
+/*
+bot.on('message:video', async (ctx) => {
+
+    console.log("message:video", ctx.message.video)
+
    // get the video url
     const videoUrl = `https://api.telegram.org/file/bot${token}/${ctx.message.video.file_path}`
 
@@ -689,7 +691,7 @@ bot.on('message:video', async (ctx) => {
     ////ctx.api.close()
 
 } )
-
+*/
 
 bot.command("start", async (ctx) => {
     await ctx.reply("Hi! I can only read messages that explicitly reply to me!", {
